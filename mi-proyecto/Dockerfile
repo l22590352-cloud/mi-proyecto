@@ -16,7 +16,7 @@ RUN npm run build -- --configuration=production
 FROM nginx:alpine
 
 # Copiar los archivos compilados de Angular desde la etapa anterior hacia Nginx
-COPY --from=build-stage /app/dist/mi-proyecto /usr/share/nginx/html
+COPY --from=build-stage /app/dist/mi-proyecto/browser /usr/share/nginx/html
 
 # Exponer el puerto estándar HTTP
 EXPOSE 80
