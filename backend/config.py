@@ -4,7 +4,7 @@ print(pyodbc.drivers())
 
 def get_connection():
     conn = pyodbc.connect(
-        'DRIVER={MySQL ODBC 9.7 Unicode Driver};'
+        'DRIVER={MySQL ODBC 9.1 Unicode Driver};'
         'SERVER=db-server;'
         'PORT=3306;'
         'DATABASE=pw;'
