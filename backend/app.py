@@ -134,54 +134,53 @@ def obtener_stats():
 # ==========================================================
 # SECCIÓN 5: GESTIÓN DE PRODUCTOS
 # ==========================================================
-@app.route('/productos/<int:id>', methods=['GET'])
-def obtener_producto_por_id(id):
-    """Trae un solo producto específico con sus tallas y colores usando su ID."""
+@app.route('/productos', methods=['GET'])
+def obtener_productos():
+    """Trae todos los productos con sus tallas, colores y categoría."""
     try:
         conn = get_connection()
         cursor = conn.cursor()
         
-        # 1. Buscar los datos básicos del producto
-        cursor.execute("SELECT id, nombre, descripcion, precio, stock, imagen, categoria FROM productos WHERE id = ?", (id,))
-        row = cursor.fetchone()
+        # Consulta principal: Incluimos 'categoria' para el filtrado en Angular
+        cursor.execute("SELECT id, nombre, descripcion, precio, stock, imagen, categoria FROM productos")
+        productos = []
         
-        if not row:
-            conn.close()
-            return jsonify({'error': 'Producto no encontrado'}), 404
+        for row in cursor.fetchall():
+            p_id = row[0]
             
-        # 2. Consultar Tallas relacionadas para este ID
-        cursor.execute("""
-            SELECT t.nombre, pt.stock 
-            FROM tallas t 
-            JOIN producto_tallas pt ON t.id = pt.talla_id 
-            WHERE pt.producto_id = ?
-        """, (id,))
-        tallas = [{'nombre': t[0], 'stock': t[1]} for t in cursor.fetchall()]
-        
-        # 3. Consultar Colores relacionados para este ID
-        cursor.execute("""
-            SELECT c.nombre 
-            FROM colores c 
-            JOIN producto_colores pc ON c.id = pc.color_id 
-            WHERE pc.producto_id = ?
-        """, (id,))
-        colores = [c[0] for c in cursor.fetchall()]
-        
-        # 4. Armar la respuesta estructurada
-        producto = {
-            'id': row[0],
-            'nombre': row[1],
-            'descripcion': row[2],
-            'precio': float(row[3]),
-            'stock': row[4],
-            'imagen': row[5],
-            'categoria': row[6] or 'Accesorios',
-            'tallas': tallas,
-            'colores': colores
-        }
-        
+            # Consultar Tallas relacionadas
+            cursor.execute("""
+                SELECT t.nombre, pt.stock 
+                FROM tallas t 
+                JOIN producto_tallas pt ON t.id = pt.talla_id 
+                WHERE pt.producto_id = ?
+            """, (p_id,))
+            tallas = [{'nombre': t[0], 'stock': t[1]} for t in cursor.fetchall()]
+            
+            # Consultar Colores relacionados
+            cursor.execute("""
+                SELECT c.nombre 
+                FROM colores c 
+                JOIN producto_colores pc ON c.id = pc.color_id 
+                WHERE pc.producto_id = ?
+            """, (p_id,))
+            colores = [c[0] for c in cursor.fetchall()]
+
+            # Armar objeto final
+            productos.append({
+                'id': p_id,
+                'nombre': row[1],
+                'descripcion': row[2],
+                'precio': float(row[3]),
+                'stock': row[4],
+                'imagen': row[5],
+                'categoria': row[6] or 'Accesorios', # Fallback si es null
+                'tallas': tallas,
+                'colores': colores
+            })
+            
         conn.close()
-        return jsonify(producto), 200
+        return jsonify(productos), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
