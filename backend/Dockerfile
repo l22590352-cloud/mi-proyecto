@@ -8,8 +8,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Descargar e instalar el Driver ODBC oficial de MySQL 9.1 para Linux
+# Descargar, crear la carpeta faltante e instalar el Driver ODBC oficial de MySQL 9.1
 RUN curl -sSL https://dev.mysql.com/get/Downloads/Connector-ODBC/9.1/mysql-connector-odbc-9.1.0-linux-glibc2.28-x86-64bit.tar.gz | tar -xzf - -C /tmp \
+    && mkdir -p /usr/lib/x86_64-linux-gnu/odbc/ \
     && cp /tmp/mysql-connector-odbc-9.1.0-linux-glibc2.28-x86-64bit/lib/libmyodbc9* /usr/lib/x86_64-linux-gnu/odbc/ \
     && /tmp/mysql-connector-odbc-9.1.0-linux-glibc2.28-x86-64bit/bin/myodbc-installer -a -d -n "MySQL ODBC 9.1 Unicode Driver" -t "DRIVER=/usr/lib/x86_64-linux-gnu/odbc/libmyodbc9w.so;"
 
