@@ -1,0 +1,246 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+<nav class="navbar navbar-expand-lg sticky-top admin-navbar">
+  <div class="container py-2">
+    <a class="navbar-brand" routerLink="/">
+      <i class="bi bi-bag-heart-fill me-2"></i>PastelShop Admin
+    </a>
+
+    <button
+      class="navbar-toggler border-0 shadow-none"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarClientes"
+      aria-controls="navbarClientes"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarClientes">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-3">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/productos">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/clientes">Clientes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/pedidos">Pedidos</a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-2">
+        <button type="button" class="icon-btn">
+          <i class="bi bi-bell"></i>
+        </button>
+
+        <img
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop"
+          alt="Admin"
+          class="user-avatar"
+        />
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="clientes-admin-page py-4">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+      <div>
+        <h2 class="page-title mb-1">Gestión de Clientes</h2>
+        <p class="page-subtitle mb-0">
+          Administra los clientes registrados en tu tienda
+        </p>
+      </div>
+
+      <button class="btn btn-nuevo-cliente" (click)="nuevoCliente()">
+        <i class="bi bi-person-plus me-2"></i>
+        Nuevo cliente
+      </button>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <div class="dashboard-box p-3 h-100">
+          <h6>Total clientes</h6>
+          <h4>{{ totalClientes }}</h4>
+          <small>Registrados en la tienda</small>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="dashboard-box p-3 h-100">
+          <h6>Activos</h6>
+          <h4>{{ clientesActivos }}</h4>
+          <small>Con actividad reciente</small>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="dashboard-box p-3 h-100">
+          <h6>Inactivos</h6>
+          <h4>{{ clientesInactivos }}</h4>
+          <small>Sin movimiento reciente</small>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="dashboard-box p-3 h-100">
+          <h6>Top clientes</h6>
+          <h4>{{ mejoresClientes }}</h4>
+          <small>Mayor valor de compra</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="filters-box p-3 mb-4">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-6">
+          <label class="form-label filter-label">Buscar cliente</label>
+          <div class="input-group search-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar por nombre, correo, ciudad o teléfono"
+              [(ngModel)]="busqueda"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label filter-label">Estado</label>
+          <select class="form-select" [(ngModel)]="estadoSeleccionado">
+            <option *ngFor="let estado of estados" [value]="estado">
+              {{ estado }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <button class="btn btn-limpiar w-100" (click)="limpiarFiltros()">
+            Limpiar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-box p-3">
+      <div class="table-responsive">
+        <table class="table align-middle admin-table mb-0">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Ciudad</th>
+              <th>Compras</th>
+              <th>Total gastado</th>
+              <th>Estado</th>
+              <th class="text-center">Opciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let cliente of clientesFiltrados">
+              <td>
+                <div class="d-flex align-items-center gap-3 client-cell">
+                  <img
+                    [src]="cliente.avatar"
+                    [alt]="cliente.nombre"
+                    class="client-thumb"
+                  />
+                  <div>
+                    <div class="client-name">{{ cliente.nombre }}</div>
+                    <small class="client-id">ID: {{ cliente.id }}</small>
+                  </div>
+                </div>
+              </td>
+
+              <td>{{ cliente.correo }}</td>
+              <td>{{ cliente.telefono }}</td>
+              <td>{{ cliente.ciudad }}</td>
+
+              <td>
+                <div class="d-flex flex-column gap-1">
+                  <span>{{ cliente.compras }} pedidos</span>
+                  <span class="compras-badge" [ngClass]="getClaseCompras(cliente.compras)">
+                    {{ getTextoCompras(cliente.compras) }}
+                  </span>
+                </div>
+              </td>
+
+              <td class="total-text">
+                $ {{ cliente.totalGastado | number:'1.0-0' }}
+              </td>
+
+              <td>
+                <span
+                  class="estado-badge"
+                  [class.estado-activo]="cliente.estado === 'Activo'"
+                  [class.estado-inactivo]="cliente.estado === 'Inactivo'"
+                >
+                  {{ cliente.estado }}
+                </span>
+              </td>
+
+              <td>
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
+
+                  <!-- VER -->
+                  <button
+                    type="button"
+                    class="btn action-btn btn-view"
+                    (click)="verCliente(cliente)"
+                    title="Ver"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+
+                  <!-- EDITAR -->
+                  <button
+                    type="button"
+                    class="btn action-btn btn-edit"
+                    (click)="editarCliente(cliente)"
+                    title="Editar"
+                  >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+
+                  <!-- ELIMINAR -->
+                  <button
+                    type="button"
+                    class="btn action-btn btn-delete"
+                    (click)="eliminarCliente(cliente.id)"
+                    title="Eliminar"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+
+                </div>
+              </td>
+            </tr>
+
+            <tr *ngIf="clientesFiltrados.length === 0">
+              <td colspan="8" class="text-center py-5 empty-state">
+                <i class="bi bi-people empty-icon d-block mb-2"></i>
+                No se encontraron clientes con esos filtros
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

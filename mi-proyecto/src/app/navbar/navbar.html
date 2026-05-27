@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg fixed-top custom-nav" *ngIf="mostrarNavbar()">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/">
+      <i class="fas fa-sparkles me-2"></i>MiTienda
+    </a>
+
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        
+        <ng-container *ngIf="usuario?.rol_id === 1">
+          <li class="nav-item"><a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Panel Admin</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/productos" routerLinkActive="active">Inventario</a></li>
+        </ng-container>
+
+        <ng-container *ngIf="usuario?.rol_id === 2">
+          <li class="nav-item"><a class="nav-link" routerLink="/catalogo" routerLinkActive="active">Tienda</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/carrito" routerLinkActive="active">Mi Carrito</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/historial-pedidos" routerLinkActive="active">Mis Pedidos</a></li>
+        </ng-container>
+        
+      </ul>
+
+      <div class="d-flex align-items-center gap-3">
+        <span class="user-name small d-none d-lg-block" *ngIf="usuario">
+          Hola, <em>{{ usuario.nombre }}</em>
+        </span>
+        <button class="btn btn-salir-soft" (click)="cerrarSesion()">
+          <i class="fas fa-sign-out-alt"></i> Salir
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,78 @@
+<div class="historial-container" [ngClass]="{'admin-mode': esAdmin}">
+  
+  <div class="header-seccion">
+    <h2>{{ esAdmin ? ' Panel de Control Logístico (Global)' : ' Mis Compras' }}</h2>
+    <p class="welcome-text">
+      {{ esAdmin ? 'Bienvenido Administrador. Monitorea y despacha las órdenes de la tienda.' : 'Hola, ' + usuarioNombre + '. Aquí puedes rastrear el estado de tus paquetes.' }}
+    </p>
+  </div>
+  <hr>
+
+  <div *ngIf="cargando" class="loading-box">
+    <i class="fas fa-spinner fa-spin me-2"></i> Consultando base de datos de pedidos...
+  </div>
+
+  <div *ngIf="!cargando && pedidos.length === 0" class="empty-history text-center py-5">
+    <p class="fs-5 text-muted">{{ esAdmin ? 'No se registran transacciones en el sistema.' : 'Aún no has realizado compras en la tienda.' }}</p>
+    <button *ngIf="!esAdmin" routerLink="/catalogo" class="btn btn-pink mt-3">Ir al Catálogo</button>
+  </div>
+
+  <div *ngIf="!cargando && pedidos.length > 0" class="pedidos-lista">
+    <div *ngFor="let pedido of pedidos" class="pedido-card">
+      
+      <div class="pedido-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+          <span class="order-id">Orden #{{ pedido.id }}</span>
+          <span class="order-date ms-3 text-muted">{{ pedido.fecha | date:'mediumDate' }}</span>
+          <span *ngIf="esAdmin" class="client-tag ms-3">👤 Cliente: <strong>{{ pedido.cliente }}</strong></span>
+        </div>
+
+        <div *ngIf="esAdmin" class="admin-selector">
+          <select 
+            [ngModel]="pedido.estado" 
+            (ngModelChange)="cambiarEstado(pedido.id, $event)"
+            class="form-select form-select-sm select-estado"
+            [ngClass]="claseEstado(pedido.estado)">
+            <option *ngFor="let estado of estadosDisponibles" [value]="estado">{{ estado }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pedido-body">
+        
+        <div *ngIf="!esAdmin" class="tracking-wrapper">
+          <div class="order-tracking-bar">
+            <div class="progress-line" [style.width]="obtenerPorcentajeProgreso(pedido.estado)"></div>
+            
+            <div class="step" [ngClass]="{'active': true}">
+              <span class="icon"><i class="fas fa-box"></i></span>
+              <p class="step-text">En preparación</p>
+            </div>
+            
+            <div class="step" [ngClass]="{'active': pedido.estado === 'En camino' || pedido.estado === 'Entregado'}">
+              <span class="icon"><i class="fas fa-truck"></i></span>
+              <p class="step-text">En camino</p>
+            </div>
+            
+            <div class="step" [ngClass]="{'active': pedido.estado === 'Entregado'}">
+              <span class="icon"><i class="fas fa-home"></i></span>
+              <p class="step-text">Entregado</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-entrega">
+          <p><i class="fas fa-map-marker-alt text-secondary me-2"></i><strong>Dirección de Entrega:</strong> {{ pedido.direccion }}, {{ pedido.ciudad }}</p>
+          <p *ngIf="esAdmin && pedido.telefono"><i class="fas fa-phone text-secondary me-2"></i><strong>Teléfono:</strong> {{ pedido.telefono }}</p>
+          <p *ngIf="esAdmin && pedido.notas"><i class="fas fa-comment-alt text-secondary me-2"></i><strong>Notas:</strong> <em>{{ pedido.notas }}</em></p>
+        </div>
+        
+        <div class="pedido-footer d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+          <span class="total-label text-secondary font-weight-bold">{{ esAdmin ? 'Total Vendido:' : 'Total Pagado:' }}</span>
+          <span class="total-amount">{{ pedido.total | currency:'USD' }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

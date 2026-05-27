@@ -1,0 +1,95 @@
+<div class="container my-5 text-center" *ngIf="!producto">
+  <div class="spinner-border text-dark mb-3" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+  <p class="text-muted fs-5 fw-light">Comunicándose con el inventario de Flask...</p>
+</div>
+
+<div class="container mt-5 pt-3" *ngIf="producto">
+  
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/catalogo" class="text-secondary text-decoration-none small fw-bold text-uppercase">
+          &larr; Volver al Catálogo
+        </a>
+      </li>
+    </ol>
+  </nav>
+
+  <div class="row g-5">
+    
+    <div class="col-12 col-md-6">
+      <div class="bg-light rounded-4 p-4 text-center shadow-sm">
+        <img [src]="producto.imagen || 'https://via.placeholder.com/400'" 
+             class="img-fluid rounded-3 object-fit-cover" 
+             style="max-height: 500px;"
+             alt="{{ producto.nombre }}">
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 d-flex flex-column justify-content-between">
+      <div>
+        <span class="badge bg-secondary text-uppercase px-3 py-2 mb-2 rounded-pill small">
+          {{ producto.categoria }}
+        </span>
+        <h1 class="display-6 fw-bold text-dark mb-2">{{ producto.nombre }}</h1>
+        <h2 class="text-dark fw-bold mb-4">{{ producto.precio | currency:'MXN':'$' }}</h2>
+        
+        <hr class="opacity-25 my-4">
+
+        <div class="mb-4" *ngIf="producto.tallas">
+          <label class="form-label fw-bold text-secondary small text-uppercase tracking-wide mb-2">
+            Selecciona tu Talla:
+          </label>
+          <div class="d-flex flex-wrap gap-2">
+            <button *ngFor="let t of (producto.tallas.split ? producto.tallas.split(',') : producto.tallas)"
+                    type="button"
+                    (click)="seleccionarTalla(t.nombre || t.talla || t)"
+                    class="btn btn-outline-dark rounded-pill px-4 py-2 fw-semibold"
+                    [class.active]="tallaSeleccionada === (t.nombre || t.talla || t)">
+              {{ t.nombre || t.talla || t }}
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-4" *ngIf="producto.colores">
+          <label class="form-label fw-bold text-secondary small text-uppercase tracking-wide mb-2">
+            Selecciona el Color:
+          </label>
+          <div class="d-flex flex-wrap gap-2">
+            <button *ngFor="let c of (producto.colores.split ? producto.colores.split(',') : producto.colores)"
+                    type="button"
+                    (click)="seleccionarColor(c.nombre || c.color || c)"
+                    class="btn btn-outline-dark rounded-pill px-4 py-2 fw-semibold"
+                    [class.active]="colorSeleccionado === (c.nombre || c.color || c)">
+              {{ c.nombre || c.color || c }}
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label class="form-label fw-bold text-secondary small text-uppercase tracking-wide d-block mb-2">
+            Cantidad:
+          </label>
+          <div class="input-group rounded-pill shadow-sm" style="max-width: 140px; overflow: hidden;">
+            <button class="btn btn-light border-0 fw-bold px-3" type="button" (click)="disminuirCantidad()">-</button>
+            <input type="text" class="form-control text-center bg-light border-0 fw-bold" [value]="cantidad" readonly>
+            <button class="btn btn-light border-0 fw-bold px-3" type="button" (click)="aumentarCantidad()">+</button>
+          </div>
+          <small class="text-muted d-block mt-2 ps-2">Disponibles: <strong>{{ producto.stock }}</strong> piezas</small>
+        </div>
+      </div>
+
+      <div class="mt-auto">
+        <button class="btn btn-dark btn-lg w-100 rounded-pill py-3 fw-bold tracking-wide shadow"
+                (click)="agregarAlBolsa()"
+                [disabled]="producto.stock <= 0">
+          {{ producto.stock > 0 ? 'AÑADIR A LA BOLSA' : 'AGOTADO' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

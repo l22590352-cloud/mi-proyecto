@@ -1,0 +1,92 @@
+/* Scroll horizontal sutil en celulares */
+.scroll-categorias::-webkit-scrollbar {
+  height: 5px;
+}
+.scroll-categorias::-webkit-scrollbar-thumb {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+}
+
+/* Burbujas de categorías superiores */
+.posicion-burbuja {
+  cursor: pointer;
+  min-width: 80px;
+  transition: transform 0.2s ease;
+}
+.posicion-burbuja:hover {
+  transform: translateY(-3px);
+}
+
+.contenedor-circulo {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+.contenedor-circulo img {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Cuando le das clic a una burbuja (Efecto activo) */
+.burbuja-activa .contenedor-circulo {
+  border-color: #000000;
+  background-color: #ffffff;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.burbuja-activa .label-categoria {
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+.label-categoria {
+  max-width: 85px;
+  font-size: 0.75rem;
+}
+
+/* Tarjetas de los productos */
+.product-card {
+  background: transparent;
+}
+.img-container {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.image-smooth {
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.product-card:hover .image-smooth {
+  transform: scale(1.05);
+}
+
+.extra-small {
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+}
+.select-custom {
+  font-size: 0.75rem;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+.btn-add {
+  font-size: 0.8rem;
+  padding: 6px 12px;
+}
+.btn-add:hover {
+  background-color: #000000;
+  color: #ffffff;
+}

@@ -1,0 +1,92 @@
+/* caja formulario */
+.register-box {
+  border: none;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* inputs */
+.pink-input {
+  border: 1px solid #f3d9e6;
+  border-radius: 12px;
+  padding: 10px 12px;
+  transition: 0.3s;
+}
+
+.pink-input:focus {
+  outline: none;
+  border-color: #d96c9d;
+  box-shadow: 0 0 8px rgba(217,108,157,0.2);
+}
+
+/* botón principal */
+.btn-register {
+  background: #d96c9d;
+  color: #fff;
+  padding: 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+}
+
+.btn-register:hover {
+  background: #c2568b;
+}
+/* navbar */
+.admin-navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #f3d9e6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #d96c9d;
+}
+
+.nav-link {
+  color: #7a5c68;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #d96c9d;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: #d96c9d;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.icon-btn:hover {
+  background: #ffe4ef;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.btn-salir {
+  background: #f8c8dc;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 6px 14px;
+}
+
+.btn-salir:hover {
+  background: #f3a9c7;
+}

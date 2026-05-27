@@ -1,0 +1,88 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark-pink">Lista de Usuarios</h2>
+    <button class="btn btn-agregar" (click)="limpiarFormulario()" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+      <i class="fas fa-user-plus me-2"></i> Agregar Usuario
+    </button>
+  </div>
+
+  <div class="card shadow-sm border-0 table-card">
+    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+      <span class="fw-bold"><i class="fas fa-users me-2"></i> Registros</span>
+      <span class="badge bg-soft-pink text-pink">Total: {{ listaUsuarios.length }}</span>
+    </div>
+    
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light">
+          <tr>
+            <th class="ps-4">ID</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th class="text-end pe-4">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of listaUsuarios">
+            <td class="ps-4"><span class="badge bg-light text-dark">{{ user.id }}</span></td>
+            <td class="fw-bold">{{ user.nombre }}</td>
+            <td>{{ user.correo }}</td>
+            <td>
+              <span class="badge" [ngClass]="user.rol_id === 1 ? 'bg-soft-blue text-blue' : 'bg-soft-pink text-pink'">
+                {{ user.rol_id === 1 ? 'Administrador' : 'Cliente' }}
+              </span>
+            </td>
+            <td class="text-end pe-4">
+              <button class="btn-edit-icon me-2" (click)="prepararEdicion(user)" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn-delete-icon" (click)="eliminarUsuario(user.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalUsuario" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="fw-bold text-dark-pink mt-2">Datos del Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form (ngSubmit)="onGuardar()">
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Nombre Completo</label>
+            <input type="text" name="nombre" [(ngModel)]="nuevoUsuario.nombre" class="form-control custom-input" placeholder="Ej. Juan Pérez" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Correo Electrónico</label>
+            <input type="email" name="correo" [(ngModel)]="nuevoUsuario.correo" class="form-control custom-input" placeholder="usuario@gmail.com" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Contraseña</label>
+            <input type="password" name="password" [(ngModel)]="nuevoUsuario.password" class="form-control custom-input" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Asignar Rol</label>
+            <select name="rol_id" [(ngModel)]="nuevoUsuario.rol_id" class="form-select custom-input">
+              <option [value]="1">Administrador</option>
+              <option [value]="2">Cliente</option>
+            </select>
+          </div>
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-pink-action text-white">
+              <i class="fas fa-save me-2"></i> Guardar Usuario
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # 1. EL SERVIDOR DE LA BASE DE DATOS (MYSQL)
+  db-server:
+    image: mysql:8.0.46
+    container_name: db-server
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Gali1105
+      MYSQL_DATABASE: pw
+    ports:
+      - "3306:3306"
+    volumes:
+      # Vincula tu carpeta local "db" con el arranque automático de MySQL en Docker
+      - ./db:/docker-entrypoint-initdb.d
+
+  # 2. TU BACKEND (FLASK EN PYTHON)
+  mi-api-flask:
+    build: ./backend
+    container_name: mi-api-flask
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+    depends_on:
+      - db-server
+
+  # 3. TU FRONTEND (ANGULAR)
+  mi-sitio-web:
+    build: ./mi-proyecto
+    container_name: mi-sitio-web
+    restart: always
+    ports:
+      - "80:80"  # Expone Angular en el puerto HTTP estándar para entrar directo con la IP externa
+    depends_on:
+      - mi-api-flask

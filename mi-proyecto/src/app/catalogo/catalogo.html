@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  
+  <div class="d-flex justify-content-start justify-content-md-center gap-4 mb-5 overflow-auto pb-3 scroll-categorias">
+    <div *ngFor="let cat of categoriasVisuales" 
+         (click)="filtrarPorCategoria(cat.nombre)" 
+         class="text-center posicion-burbuja" 
+         [class.burbuja-activa]="categoriaSeleccionada === cat.nombre">
+      
+      <div class="contenedor-circulo shadow-sm mx-auto mb-2">
+        <img [src]="cat.imagen" alt="{{ cat.nombre }}">
+      </div>
+      
+      <span class="text-muted small fw-bold d-block text-truncate label-categoria">
+        {{ cat.nombre }}
+      </span>
+    </div>
+  </div>
+
+  <hr class="text-muted opacity-25 mb-5">
+
+  <div class="row">
+    <div class="col-12 text-center my-5" *ngIf="productosFiltrados.length === 0">
+      <p class="text-muted fs-5">No hay productos disponibles en esta categoría por el momento.</p>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3 mb-4" *ngFor="let producto of productosFiltrados">
+      <div class="card h-100 product-card border-0">
+        
+        <div class="img-container position-relative bg-light rounded-3 p-3">
+          <img [src]="producto.imagen || 'https://via.placeholder.com/200'" class="card-img-top image-smooth" alt="{{producto.nombre}}">
+        </div>
+        
+        <div class="card-body px-1 pt-3 d-flex flex-column">
+          <p class="text-muted text-uppercase tracking-wider extra-small mb-1">{{ producto.categoria }}</p>
+          <h6 class="card-title text-dark text-truncate mb-1" title="{{ producto.nombre }}">{{ producto.nombre }}</h6>
+          <h5 class="fw-bold text-dark mb-3">{{ producto.precio | currency:'MXN':'$' }}</h5>
+
+          <a [routerLink]="['/detalle-producto', producto.id]" 
+   class="btn btn-outline-dark btn-sm rounded-pill w-100 mt-auto fw-bold btn-add text-decoration-none text-center d-block">
+  Ver detalles
+</a>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

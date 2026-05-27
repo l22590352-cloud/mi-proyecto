@@ -1,0 +1,57 @@
+/* Tarjetas de estadísticas (Superiores) */
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  height: 85px;
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+/* Colores de fondo para los iconos (Estilo imagen referencia) */
+.bg-soft-blue   { background-color: #e3f2fd; color: #2196f3; }
+.bg-soft-green  { background-color: #e8f5e9; color: #4caf50; }
+.bg-soft-pink   { background-color: #fce4ec; color: #e91e63; }
+.bg-soft-yellow { background-color: #fffde7; color: #fbc02d; }
+
+/* Mantener tus estilos anteriores de access-card y btn-pink-action */
+.text-pink { color: #d96c9d; }
+.text-dark-pink { color: #7a5c68; }
+
+.access-card {
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.access-card:hover {
+  transform: translateY(-8px);
+}
+
+.icon-box {
+  width: 60px;
+  height: 60px;
+  background: #fdf6fb;
+  color: #d96c9d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border-radius: 15px;
+  font-size: 1.8rem;
+}
+
+.btn-pink-action {
+  background-color: #d96c9d;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  font-weight: 600;
+}

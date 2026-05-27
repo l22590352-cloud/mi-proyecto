@@ -1,0 +1,5 @@
+<app-navbar #navbar></app-navbar>
+
+<div class="main-content" [class.con-espacio]="navbar.mostrarNavbar()">
+  <router-outlet></router-outlet>
+</div>

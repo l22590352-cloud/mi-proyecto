@@ -1,0 +1,96 @@
+<div class="container dashboard-container">
+  
+  <div class="row g-3 mb-5 mt-2">
+    <div class="col-md-3">
+      <div class="stat-card shadow-sm border-0 d-flex align-items-center p-3">
+        <div class="stat-icon bg-soft-blue">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="ms-3">
+          <small class="text-muted d-block">Usuarios</small>
+          <span class="fw-bold fs-5 text-dark-pink">{{ totalUsuarios }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="stat-card shadow-sm border-0 d-flex align-items-center p-3">
+        <div class="stat-icon bg-soft-green">
+          <i class="fas fa-boxes"></i>
+        </div>
+        <div class="ms-3">
+          <small class="text-muted d-block">Productos</small>
+          <span class="fw-bold fs-5 text-dark-pink">{{ totalProductos }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="stat-card shadow-sm border-0 d-flex align-items-center p-3">
+        <div class="stat-icon bg-soft-pink">
+          <i class="fas fa-box-open"></i>
+        </div>
+        <div class="ms-3">
+          <small class="text-muted d-block">Pedidos Mes</small>
+          <span class="fw-bold fs-5 text-dark-pink">{{ totalPedidos }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="stat-card shadow-sm border-0 d-flex align-items-center p-3">
+        <div class="stat-icon bg-soft-yellow">
+          <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <div class="ms-3">
+          <small class="text-muted d-block">Alertas Stock</small>
+          <span class="fw-bold fs-5 text-dark-pink">{{ alertasStock }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="mb-5 opacity-25">
+
+  <div class="text-center mb-4">
+    <h3 class="fw-bold text-pink">Gestión del Sistema</h3>
+  </div>
+
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4">
+      <div class="card access-card shadow-sm border-0">
+        <div class="card-body text-center p-4">
+          <div class="icon-box mb-3">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h5 class="fw-bold text-dark-pink">Usuarios</h5>
+          <button class="btn btn-pink-action w-100 mt-2" routerLink="/usuarios">Acceder</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card access-card shadow-sm border-0">
+        <div class="card-body text-center p-4">
+          <div class="icon-box mb-3">
+            <i class="fas fa-store"></i>
+          </div>
+          <h5 class="fw-bold text-dark-pink">Productos</h5>
+          <button class="btn btn-pink-action w-100 mt-2" routerLink="/productos">Acceder</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card access-card shadow-sm border-0">
+        <div class="card-body text-center p-4">
+          <div class="icon-box mb-3">
+            <i class="fas fa-shipping-fast"></i>
+          </div>
+          <h5 class="fw-bold text-dark-pink">Pedidos</h5>
+          <button class="btn btn-pink-action w-100 mt-2" routerLink="/historial-pedidos">Acceder</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

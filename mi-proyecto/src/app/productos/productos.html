@@ -1,0 +1,220 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<div class="productos-admin-page py-4">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+      <div>
+        <h2 class="page-title mb-1">Gestión de Productos</h2>
+        <p class="page-subtitle mb-0">Administra el catálogo de tu tienda de ropa</p>
+      </div>
+
+      <button class="btn btn-nuevo-producto" (click)="nuevoProducto()" data-bs-toggle="modal" data-bs-target="#modalProducto">
+        <i class="bi bi-plus-circle me-2"></i>
+        Nuevo producto
+      </button>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <div class="dashboard-box p-3 h-100">
+          <h6>Total productos</h6>
+          <h4>{{ totalProductos }}</h4>
+          <small>Registrados en catálogo</small>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="dashboard-box p-3 h-100">
+          <h6>Activos</h6>
+          <h4>{{ productosActivos }}</h4>
+          <small>Con existencia disponible</small>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="dashboard-box p-3 h-100">
+          <h6>Stock bajo</h6>
+          <h4 class="text-warning">{{ stockBajo }}</h4>
+          <small>Menos de 5 unidades</small>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="dashboard-box p-3 h-100">
+          <h6>Agotados</h6>
+          <h4 class="text-danger">{{ agotados }}</h4>
+          <small>Sin stock disponible</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="filters-box p-3 mb-4">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-6">
+          <label class="form-label filter-label">Buscar producto</label>
+          <div class="input-group search-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control" placeholder="Buscar por nombre..." [(ngModel)]="busqueda" />
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label filter-label">Categoría</label>
+          <select class="form-select" [(ngModel)]="categoriaSeleccionada">
+            <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-limpiar w-100" (click)="limpiarFiltros()">Limpiar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-box p-3">
+      <div class="table-responsive">
+        <table class="table align-middle admin-table mb-0">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Stock Total</th>
+              <th>Tallas (Cant.)</th>
+              <th>Colores</th>
+              <th class="text-center">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of productosFiltrados">
+              <td>
+                <div class="d-flex align-items-center gap-3 product-cell">
+                  <img [src]="producto.imagen || 'https://via.placeholder.com/50'" class="product-thumb" />
+                  <div>
+                    <div class="product-name">{{ producto.nombre }}</div>
+                    <small class="product-id">ID: {{ producto.id }}</small>
+                  </div>
+                </div>
+              </td>
+              <td class="price-text">$ {{ producto.precio | number:'1.2-2' }}</td>
+              <td>
+                <div class="d-flex flex-column gap-1">
+                  <span>{{ producto.stock }} piezas</span>
+                  <span class="stock-badge" [ngClass]="getClaseStock(producto.stock)">
+                    {{ getTextoStock(producto.stock) }}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex gap-1 flex-wrap">
+                  <span *ngFor="let t of producto.tallas" class="badge bg-light text-dark border">
+                    {{ t.nombre }}: {{ t.stock }}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex gap-1 flex-wrap">
+                  <span *ngFor="let c of producto.colores" class="badge rounded-pill border text-muted">
+                    {{ c }}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                  <button class="btn action-btn btn-view" (click)="verProducto(producto)"><i class="fa-solid fa-eye"></i></button>
+                  <button class="btn action-btn btn-edit" (click)="prepararEdicion(producto)" data-bs-toggle="modal" data-bs-target="#modalProducto"><i class="fa-solid fa-pen-to-square"></i></button>
+                  <button class="btn action-btn btn-delete" (click)="eliminarProducto(producto.id)"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="productosFiltrados.length === 0">
+              <td colspan="6" class="text-center py-5 empty-state">No se encontraron productos</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+#modalProducto
+
+<div class="modal fade" id="modalProducto" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold">{{ esEdicion ? 'Editar Producto' : 'Nuevo Producto' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="limpiarFormulario()"></button>
+      </div>
+      
+      <div class="modal-body">
+        <form #productoForm="ngForm">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label fw-semibold">Nombre del Producto</label>
+              <input type="text" class="form-control" name="nombre" [(ngModel)]="nuevoProductoData.nombre" placeholder="Ej. Pantalón Levis" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">Precio ($)</label>
+              <input type="number" class="form-control" name="precio" [(ngModel)]="nuevoProductoData.precio" required>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label fw-semibold">Descripción</label>
+              <textarea class="form-control" name="descripcion" [(ngModel)]="nuevoProductoData.descripcion" rows="2"></textarea>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label fw-semibold">URL de la Imagen</label>
+              <input type="text" class="form-control" name="imagen" [(ngModel)]="nuevoProductoData.imagen">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Stock Total Inicial</label>
+              <input type="number" class="form-control" name="stock" [(ngModel)]="nuevoProductoData.stock">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Categoría</label>
+              <select class="form-select" name="categoria" [(ngModel)]="nuevoProductoData.categoria">
+                <option *ngFor="let cat of categorias.slice(1)" [value]="cat">{{cat}}</option>
+              </select>
+            </div>
+
+            <div class="col-12 mt-4">
+              <div class="p-3 border rounded bg-light">
+                <label class="form-label fw-bold text-primary"><i class="fa-solid fa-ruler me-2"></i>Tallas y Stock</label>
+                <div class="d-flex flex-wrap gap-3 mt-2">
+                  <div *ngFor="let t of listaTallasMaster" class="text-center p-2 border rounded bg-white shadow-sm" style="min-width: 85px;">
+                    <small class="d-block fw-bold mb-1">{{t.nombre}}</small>
+                    <input type="number" class="form-control form-control-sm text-center" 
+                           placeholder="0" (input)="actualizarStockTalla(t.id, $event)"
+                           [value]="getStockActualTalla(t.id)">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 mt-3">
+              <div class="p-3 border rounded bg-light">
+                <label class="form-label fw-bold text-primary"><i class="fa-solid fa-palette me-2"></i>Colores</label>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                  <button *ngFor="let c of listaColoresMaster" type="button" 
+                          class="btn btn-sm btn-color-select"
+                          [ngClass]="esColorSeleccionado(c.id) ? 'btn-primary' : 'btn-outline-secondary'"
+                          (click)="toggleColor(c.id)">
+                    <i class="fa-solid fa-check me-1" *ngIf="esColorSeleccionado(c.id)"></i>
+                    {{c.nombre}}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="limpiarFormulario()">Cancelar</button>
+        <button type="button" class="btn btn-nuevo-producto px-4" (click)="guardarProducto()">
+          <i class="bi bi-save me-2"></i>
+          {{ esEdicion ? 'Actualizar Cambios' : 'Guardar Producto' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

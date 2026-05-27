@@ -1,0 +1,164 @@
+/* Contenedor Principal */
+.historial-container {
+  max-width: 900px;
+  margin: 90px auto 40px auto; /* Margen superior para que no lo tape el navbar fixed */
+  padding: 0 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.header-seccion h2 {
+  color: #333;
+  font-weight: 700;
+}
+
+.welcome-text {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Tarjeta Estilo Contenedor */
+.pedido-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eaeaea;
+  margin-bottom: 25px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.pedido-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Encabezado Interno de la Tarjeta */
+.pedido-header {
+  background-color: #fff5f8; /* Un toque rosa ligero de fondo */
+  padding: 15px 20px;
+  border-bottom: 1px solid #fbdbe6;
+}
+
+.order-id {
+  font-weight: 700;
+  color: #db2777;
+  font-size: 1.1rem;
+}
+
+.pedido-body {
+  padding: 20px;
+}
+
+/* ========================================================
+   🔥 NUEVO RASTREADOR SLIM (EVITA QUE SE VEA ENORME)
+   ======================================================== */
+.tracking-wrapper {
+  max-width: 600px; /* <--- Esto evita que se extienda infinitamente en la hoja */
+  margin: 30px auto 40px auto; /* Centrado perfecto */
+  padding: 0 15px;
+}
+
+.order-tracking-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+/* Línea Gris Base */
+.order-tracking-bar::before {
+  content: '';
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background-color: #e2e8f0;
+  top: 18px;
+  left: 0;
+  z-index: 1;
+}
+
+/* Línea de Progreso Rosa */
+.progress-line {
+  position: absolute;
+  height: 4px;
+  background-color: #ff69b4;
+  top: 18px;
+  left: 0;
+  z-index: 2;
+  transition: width 0.4s ease-in-out;
+}
+
+/* Burbujas */
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+}
+
+.step .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 3px solid #e2e8f0;
+  color: #94a3b8;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.step-text {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #64748b;
+  text-align: center;
+}
+
+/* Clases de Activación */
+.step.active .icon {
+  background-color: #ff69b4;
+  border-color: #ff69b4;
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 105, 180, 0.4);
+}
+
+.step.active .step-text {
+  color: #db2777;
+  font-weight: 600;
+}
+
+/* Detalles Inferiores */
+.info-entrega p {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #4a5568;
+}
+
+.total-amount {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.btn-pink {
+  background-color: #ff69b4;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.btn-pink:hover {
+  background-color: #db2777;
+  color: white;
+}
+
+.loading-box {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 1.1rem;
+}

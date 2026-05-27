@@ -1,0 +1,136 @@
+<div class="checkout-container">
+  
+  <div class="checkout-form-section">
+    <h2>Detalles de Envío y Pago</h2>
+    
+    <form (ngSubmit)="finalizarCompra()">
+      
+      <div class="form-group-row">
+        <div class="form-group">
+          <label>Nombre Completo *</label>
+          <input type="text" [(ngModel)]="formulario.nombre" name="nombre" required placeholder="Ej. Rod">
+        </div>
+        <div class="form-group">
+          <label>Correo Electrónico *</label>
+          <input type="email" [(ngModel)]="formulario.correo" name="correo" required placeholder="ejemplo@correo.com">
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <div class="form-group">
+          <label>Teléfono Celular *</label>
+          <input type="tel" [(ngModel)]="formulario.telefono" name="telefono" required placeholder="4425550192">
+        </div>
+        <div class="form-group">
+          <label>Código Postal *</label>
+          <input type="text" [(ngModel)]="formulario.codigoPostal" name="codigoPostal" required placeholder="76000">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Dirección (Calle y Número) *</label>
+        <input type="text" [(ngModel)]="formulario.direccion" name="direccion" required placeholder="Calle Falsa #123">
+      </div>
+
+      <div class="form-group-row">
+        <div class="form-group">
+          <label>Colonia *</label>
+          <input type="text" [(ngModel)]="formulario.colonia" name="colonia" required placeholder="Col. Centro">
+        </div>
+        <div class="form-group">
+          <label>Ciudad *</label>
+          <input type="text" [(ngModel)]="formulario.ciudad" name="ciudad" required placeholder="Querétaro">
+        </div>
+        <div class="form-group">
+          <label>Estado *</label>
+          <input type="text" [(ngModel)]="formulario.estado" name="estado" required placeholder="Qro">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Referencias o Notas de Entrega (Opcional)</label>
+        <textarea [(ngModel)]="formulario.referencia" name="referencia" rows="2" placeholder="Fachada color rosa, portón blanco..."></textarea>
+      </div>
+
+      <div class="payment-selector">
+        <h3>Método de Pago</h3>
+        <div class="radio-options">
+          <label>
+            <input type="radio" [(ngModel)]="formulario.metodoPago" name="metodoPago" value="Tarjeta">
+            Tarjeta de Crédito / Débito
+          </label>
+          <label>
+            <input type="radio" [(ngModel)]="formulario.metodoPago" name="metodoPago" value="Efectivo">
+            Pago contra entrega
+          </label>
+        </div>
+      </div>
+
+      <div *ngIf="formulario.metodoPago === 'Tarjeta'" class="card-details-box">
+        <div class="form-group">
+          <label>Número de Tarjeta *</label>
+          <input type="text" [(ngModel)]="formulario.numeroTarjeta" name="numeroTarjeta" placeholder="0000 0000 0000 0000" maxlength="16">
+        </div>
+        <div class="form-group">
+          <label>Nombre del Titular *</label>
+          <input type="text" [(ngModel)]="formulario.nombreTarjeta" name="nombreTarjeta" placeholder="Como aparece en la tarjeta">
+        </div>
+        <div class="form-group-row">
+          <div class="form-group">
+            <label>Expiración *</label>
+            <input type="text" [(ngModel)]="formulario.expiracion" name="expiracion" placeholder="MM/AA" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label>CVV *</label>
+            <input type="password" [(ngModel)]="formulario.cvv" name="cvv" placeholder="123" maxlength="3">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit-order" [disabled]="cargandoPedido">
+        {{ cargandoPedido ? 'Procesando Compra...' : 'Finalizar Compra' }}
+      </button>
+    </form>
+  </div>
+
+  <div class="checkout-summary-section">
+    <h3>Resumen del Pedido</h3>
+    
+    <div class="checkout-items-list">
+      <div *ngFor="let item of carrito" class="checkout-item-card">
+        <img [src]="item.imagen" [alt]="item.nombre">
+        <div class="item-details">
+          <h4>{{ item.nombre }}</h4>
+          <p>
+            Cant: {{ item.cantidad }} 
+            <span *ngIf="item.tallaSeleccionada">| Talla: {{ item.tallaSeleccionada }}</span>
+            <span *ngIf="item.colorSeleccionado">| Color: {{ item.colorSeleccionado }}</span>
+          </p>
+        </div>
+        <span class="item-price">${{ item.precio * item.cantidad }}</span>
+      </div>
+    </div>
+
+    <hr class="summary-divider">
+
+    <div class="summary-totals">
+      <div class="total-row">
+        <span>Subtotal</span>
+        <span>${{ getSubtotal() }}</span>
+      </div>
+      <div class="total-row">
+        <span>Envío</span>
+        <span [class.free-shipping]="getEnvio() === 0">
+          {{ getEnvio() === 0 ? 'Gratis' : '$' + getEnvio() }}
+        </span>
+      </div>
+      <div class="total-row grand-total">
+        <span>Total</span>
+        <strong>${{ getTotal() }}</strong>
+      </div>
+    </div>
+
+    <a routerLink="/carrito" class="btn-back-cart">◄ Modificar Carrito</a>
+  </div>
+
+</div>

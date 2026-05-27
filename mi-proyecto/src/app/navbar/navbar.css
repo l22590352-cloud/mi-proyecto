@@ -1,0 +1,42 @@
+.custom-nav {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #fecfef;
+  padding: 0.8rem 0;
+}
+
+.navbar-brand {
+  color: #d96c9d !important;
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  color: #8a737d !important;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  color: #d96c9d !important;
+  transform: translateY(-2px);
+}
+
+.btn-salir-soft {
+  background: #ffe4e1;
+  color: #d96c9d;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-salir-soft:hover {
+  background: #d96c9d;
+  color: white;
+}
+
+.user-name {
+  color: #d96c9d;
+  font-style: italic;
+}

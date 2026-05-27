@@ -1,0 +1,100 @@
+<div class="carrito-container">
+  <h2>Tu Carrito de Compras</h2>
+
+  <div *ngIf="carrito.length === 0" class="carrito-vacio">
+    <p>Tu bolsa de compras está vacía.</p>
+    <button routerLink="/catalogo" class="btn-seguir">Ver Catálogo</button>
+  </div>
+
+  <div *ngIf="carrito.length > 0" class="carrito-contenido">
+    
+    <div class="productos-lista">
+      <div *ngFor="let item of carrito" class="producto-item">
+        
+        <img [src]="item.imagen" [alt]="item.nombre" class="producto-img">
+        
+        <div class="producto-detalles">
+          <h3>{{ item.nombre }}</h3>
+          <div class="variantes">
+            <span *ngIf="item.tallaSeleccionada">Talla: <strong>{{ item.tallaSeleccionada }}</strong></span>
+            <span *ngIf="item.colorSeleccionado"> | Color: <strong>{{ item.colorSeleccionado }}</strong></span>
+          </div>
+          <p class="precio-unitario">Precio: ${{ item.precio }}</p>
+        </div>
+
+        <div class="producto-cantidad">
+          <button (click)="disminuirCantidad(item)" class="btn-cantidad">-</button>
+          <span class="cantidad-numero">{{ item.cantidad }}</span>
+          <button (click)="aumentarCantidad(item)" class="btn-cantidad">+</button>
+        </div>
+
+        <div class="producto-subtotal">
+          <p class="subtotal-monto">${{ item.precio * item.cantidad }}</p>
+          <button (click)="eliminarItem(item)" class="btn-eliminar">Eliminar</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="carrito-resumen">
+      <h3>Resumen del Pedido</h3>
+      
+      <div class="resumen-fila">
+        <span>Subtotal</span>
+        <span>${{ totalPagar }}</span>
+      </div>
+      
+      <div class="resumen-fila">
+        <span>Envío</span>
+        <span class="envio-gratis">Gratis</span>
+      </div>
+      
+      <hr>
+      
+      <div class="resumen-fila total">
+        <span>Total</span>
+        <span>${{ totalPagar }}</span>
+      </div>
+
+      <button (click)="mostrarModal = true" class="btn-checkout">Confirmar Pedido</button>
+    </div>
+
+  </div>
+
+  <div class="modal-overlay" *ngIf="mostrarModal" (click)="mostrarModal = false">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      
+      <div class="modal-header">
+        <h3>¿Listo para finalizar tu compra?</h3>
+        <button class="btn-close-x" (click)="mostrarModal = false">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p>Estás a un paso de estrenar. Tu bolsa incluye:</p>
+        
+        <div class="mini-resumen-lista">
+          <div *ngFor="let item of carrito" class="mini-item">
+            <span>• {{ item.nombre }} (x{{ item.cantidad }})</span>
+            <strong>${{ item.precio * item.cantidad }}</strong>
+          </div>
+        </div>
+
+        <div class="modal-total-destacado">
+          <span>Total a Pagar:</span>
+          <span>${{ totalPagar }}</span>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancelar-modal" (click)="mostrarModal = false">
+          Seguir viendo prendas
+        </button>
+        <button class="btn-ir-checkout" routerLink="/checkout">
+          Proceder al Pago ➔
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

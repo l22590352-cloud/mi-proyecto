@@ -1,0 +1,94 @@
+:root {
+  --pastel-pink: #f8e1eb;
+  --dark-pink: #d63384;
+  --soft-pink: #fceef5;
+  --text-gray: #6c757d;
+  --text-dark: #333333;
+  --white: #ffffff;
+  --soft-blue: #e7f0fd;
+  --dark-blue: #0d6efd;
+}
+
+.text-dark-pink { color: var(--dark-pink) !important; }
+.bg-soft-pink { background-color: var(--soft-pink) !important; }
+.text-pink { color: var(--dark-pink) !important; }
+
+.table-card {
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: var(--white);
+  border: none;
+}
+
+/* --- BOTONES DE ACCIÓN (CORREGIDOS) --- */
+.btn-edit-icon, .btn-delete-icon {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-edit-icon {
+  color: var(--dark-pink);
+  background-color: var(--soft-pink);
+}
+
+.btn-edit-icon:hover {
+  background-color: var(--dark-pink);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-delete-icon {
+  color: #dc3545;
+  background-color: #fee2e2;
+}
+
+.btn-delete-icon:hover {
+  background-color: #dc3545;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* --- ESTILO DE TABLA --- */
+.table thead th {
+  background-color: #fafafa;
+  color: var(--text-gray);
+  font-size: 0.85rem;
+  border-bottom: 2px solid var(--soft-pink);
+}
+
+.btn-agregar {
+  background-color: var(--dark-pink);
+  color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  border: none;
+  font-weight: 600;
+}
+
+/* --- INPUTS Y MODAL --- */
+.custom-input {
+  background-color: var(--soft-pink);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.custom-input:focus {
+  background-color: var(--white);
+  border-color: var(--dark-pink);
+  box-shadow: 0 0 0 0.25rem rgba(214, 51, 132, 0.15);
+  outline: none;
+}
+
+.btn-pink-action {
+  background-color: var(--dark-pink);
+  border-radius: 12px;
+  padding: 12px;
+  border: none;
+}
+
+.bg-soft-blue { background-color: var(--soft-blue); }
+.text-blue { color: var(--dark-blue); }

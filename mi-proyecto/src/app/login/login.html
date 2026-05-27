@@ -1,0 +1,46 @@
+<div class="login-bg d-flex justify-content-center align-items-center vh-100">
+  
+  <img src="https://tse2.mm.bing.net/th/id/OIP.e_7_aqbrRmhiyHq30VvjvgHaI-?r=0&cb=thfvnextfalcon&rs=1&pid=ImgDetMain&o=7&rm=3" class="floating img1" alt="deco">
+  <img src="https://tse3.mm.bing.net/th/id/OIP.dJBJ-0XvKuLzdBsDP10jsAHaJH?r=0&cb=thfvnextfalcon&rs=1&pid=ImgDetMain&o=7&rm=3" class="floating img2" alt="deco">
+  <img src="https://tse2.mm.bing.net/th/id/OIP.JV6zIbk-35WgeY4xFKZ8wwHaKO?r=0&cb=thfvnextfalcon&rs=1&pid=ImgDetMain&o=7&rm=3" class="floating img3" alt="deco">
+
+  <div class="card login-card p-5">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold title-gradient">¡Hola de nuevo!</h2>
+      <p class="text-muted">Ingresa tus datos para continuar</p>
+    </div>
+
+    <form (ngSubmit)="ingresar()">
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Correo electrónico</label>
+        <div class="input-group">
+          <span class="input-group-text bg-transparent border-end-0"><i class="fas fa-envelope"></i></span>
+          <input type="email" name="correo" [(ngModel)]="credenciales.correo" 
+                 class="form-control input-custom border-start-0" placeholder="tu@correo.com" required>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Contraseña</label>
+        <div class="input-group">
+          <span class="input-group-text bg-transparent border-end-0"><i class="fas fa-lock"></i></span>
+          <input type="password" name="password" [(ngModel)]="credenciales.password" 
+                 class="form-control input-custom border-start-0" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-login w-100 py-3 mt-2">
+        Ingresar 
+      </button>
+
+     
+
+      <div class="text-center mt-3">
+  <p class="mb-0 text-muted">¿No tienes cuenta?</p>
+  <a routerLink="/registro" class="btn btn-link p-0" style="color: #d96c9d; font-weight: bold; text-decoration: none;">
+    Regístrate aquí
+  </a>
+</div>
+    </form>
+  </div>
+</div>

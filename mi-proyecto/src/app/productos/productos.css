@@ -1,0 +1,294 @@
+body {
+  background: #fdf6fb;
+}
+
+.productos-admin-page {
+  background: #fdf6fb;
+  min-height: 100vh;
+}
+
+/* navbar */
+.admin-navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #f3d9e6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #d96c9d;
+}
+
+.nav-link {
+  color: #7a5c68;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #d96c9d;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: #d96c9d;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.icon-btn:hover {
+  background: #ffe4ef;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* titles */
+.page-title {
+  color: #5f4953;
+  font-weight: 700;
+  margin: 0;
+}
+
+.page-subtitle {
+  color: #8d7580;
+}
+
+/* cards */
+.dashboard-box {
+  border: none;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: 0.3s;
+}
+
+.dashboard-box:hover {
+  transform: translateY(-4px);
+}
+
+.dashboard-box h6 {
+  margin-bottom: 8px;
+  color: #7a5c68;
+  font-weight: 600;
+}
+
+.dashboard-box h4 {
+  margin: 0;
+  color: #d96c9d;
+  font-weight: bold;
+}
+
+.dashboard-box small {
+  color: #999;
+}
+
+/* filters */
+.filters-box {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.filter-label {
+  color: #7a5c68;
+  font-weight: 600;
+}
+
+.search-group .input-group-text {
+  background: #fff0f7;
+  border: 1px solid #f0d3df;
+  color: #d96c9d;
+}
+
+.form-control,
+.form-select {
+  border-radius: 12px;
+  border: 1px solid #edd5e0;
+  color: #7a5c68;
+  min-height: 46px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #d96c9d;
+  box-shadow: 0 0 0 0.2rem rgba(217, 108, 157, 0.15);
+}
+
+/* table */
+.table-box {
+  border: none;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.admin-table thead th {
+  color: #7a5c68;
+  font-weight: 700;
+  border-bottom: 1px solid #f1dbe5;
+  white-space: nowrap;
+}
+
+.admin-table tbody td {
+  vertical-align: middle;
+  border-color: #f7e7ee;
+  color: #6f5863;
+}
+
+.product-cell {
+  min-width: 240px;
+}
+
+.product-thumb {
+  width: 62px;
+  height: 62px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid #f3d9e6;
+}
+
+.product-name {
+  font-weight: 700;
+  color: #5f4953;
+}
+
+.product-id {
+  color: #9a7f8a;
+}
+
+.price-text {
+  font-weight: 700;
+  color: #d96c9d;
+}
+
+.stock-badge,
+.estado-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.badge-stock-ok {
+  background: #e9f8ef;
+  color: #3d9a61;
+}
+
+.badge-stock-bajo {
+  background: #fff4df;
+  color: #d08a1d;
+}
+
+.badge-stock-agotado {
+  background: #ffe5eb;
+  color: #d9537d;
+}
+
+.estado-activo {
+  background: #fce7f0;
+  color: #d96c9d;
+}
+
+.estado-inactivo {
+  background: #ece7ea;
+  color: #7f6b74;
+}
+
+/* buttons */
+.btn-nuevo-producto {
+  background: #d96c9d;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(217, 108, 157, 0.25);
+}
+
+.btn-nuevo-producto:hover {
+  background: #c85a8c;
+  color: #fff;
+}
+
+.btn-limpiar {
+  background: #f8c8dc;
+  border: none;
+  color: white;
+  border-radius: 12px;
+  min-height: 46px;
+  font-weight: 700;
+}
+
+.btn-limpiar:hover {
+  background: #f3a9c7;
+  color: white;
+}
+
+.action-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-view {
+  background: #f6eef3;
+  color: #9b6b81;
+}
+
+.btn-view:hover {
+  background: #eedde6;
+  color: #8a5b71;
+}
+
+.btn-edit {
+  background: #ffe4ef;
+  color: #d96c9d;
+}
+
+.btn-edit:hover {
+  background: #ffd3e6;
+  color: #c85a8c;
+}
+
+.btn-delete {
+  background: #ffe8ee;
+  color: #dc5f85;
+}
+
+.btn-delete:hover {
+  background: #ffd7e3;
+  color: #c94d73;
+}
+
+.empty-state {
+  color: #9f8791;
+}
+
+.empty-icon {
+  font-size: 2.2rem;
+  color: #d96c9d;
+}
+
+@media (max-width: 991.98px) {
+  .page-title {
+    font-size: 1.6rem;
+  }
+
+  .product-cell {
+    min-width: 200px;
+  }
+}
